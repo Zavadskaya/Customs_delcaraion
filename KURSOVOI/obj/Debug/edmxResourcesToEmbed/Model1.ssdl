@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище customModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="autorization">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id_customer" />
+    </Key>
+    <Property Name="id_customer" Type="int" Nullable="false" />
+    <Property Name="customerLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="customerFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="birthDate" Type="date" Nullable="false" />
+    <Property Name="sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="phoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="state" Type="nvarchar" MaxLength="50" />
+    <Property Name="postalCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="declaration">
+    <Key>
+      <PropertyRef Name="id_declaration" />
+    </Key>
+    <Property Name="id_declaration" Type="int" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="id_customer" Type="int" Nullable="false" />
+    <Property Name="id_product" Type="int" Nullable="false" />
+    <Property Name="id_declarator" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="declarator">
+    <Key>
+      <PropertyRef Name="id_declarator" />
+    </Key>
+    <Property Name="id_declarator" Type="int" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="firstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="jobTitle" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "custom.dbo.product" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="productCategory" />
+      <PropertyRef Name="productName" />
+      <PropertyRef Name="productScale" />
+      <PropertyRef Name="productInfo" />
+      <PropertyRef Name="productCampony" />
+      <PropertyRef Name="unitPrice" />
+    </Key>
+    <Property Name="id_product" Type="int" />
+    <Property Name="productCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="productName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="productScale" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="productInfo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="productCampony" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="unitPrice" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityContainer Name="Хранилище customModelContainer">
+    <EntitySet Name="autorization" EntityType="Self.autorization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="declaration" EntityType="Self.declaration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="declarator" EntityType="Self.declarator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [product].[id_product] AS [id_product], 
+    [product].[productCategory] AS [productCategory], 
+    [product].[productName] AS [productName], 
+    [product].[productScale] AS [productScale], 
+    [product].[productInfo] AS [productInfo], 
+    [product].[productCampony] AS [productCampony], 
+    [product].[unitPrice] AS [unitPrice]
+    FROM [dbo].[product] AS [product]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

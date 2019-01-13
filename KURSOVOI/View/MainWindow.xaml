@@ -1,0 +1,170 @@
+﻿<Window  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KURSOVOI"
+        xmlns:Model="clr-namespace:KURSOVOI.Model"
+        xmlns:ms="http://namespaces.mindscape.co.nz/wpf" 
+        x:Class="KURSOVOI.View.MainWindow"
+        mc:Ignorable="d"
+        Icon="../Resourse/declaration.ico"
+    Title="Declaration" Height="352" Width="589" Background="Black" Foreground="White" WindowStyle="ThreeDBorderWindow" FontFamily="Century Gothic" FontSize="14" Cursor="Hand" Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Activated="Window_Activated">
+
+    <Window.Resources>
+        <CollectionViewSource x:Key="customerdeclarationViewSource"  d:DesignSource="{d:DesignInstance {x:Type Model:declaration}, CreateList=True}"/>
+    </Window.Resources>
+
+
+    <Grid Margin="0,0,2,-6"   >
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Menu Opacity="50" FontSize="20"  Background="Black" Grid.ColumnSpan="2" Margin="0,10,0,114" BorderBrush="WhiteSmoke" BorderThickness="2">
+
+            <MenuItem Width="90" Header="Options" Foreground="WhiteSmoke">
+                <Button Grid.Row="2" Content="Push"   BorderThickness="0"  Foreground="Black" Click="Push_Click" Width="87" BorderBrush="Black">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="IndianRed"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </MenuItem>
+            <Button Grid.Row="0" Content="Product" BorderBrush="Black"  BorderThickness="6"  Foreground="WhiteSmoke" Click="Product_Click" Width="90" >
+                <Button.Style >
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="IndianRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Content="Customer" BorderThickness="6"  Foreground="WhiteSmoke" Click="Customer_Click" Width="110"  BorderBrush="Black">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="IndianRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Row="2" Content="Exit"   BorderThickness="6"  Foreground="WhiteSmoke" Click="Exit_Click" Width="40" BorderBrush="Black"
+                    >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="IndianRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </Menu>
+
+        <TextBlock Text="DECLARATION" Foreground="Black" Background="Bisque" TextAlignment="Center" VerticalAlignment="Center"  FontFamily="Century Gothic" FontSize="18" Margin="0,79,0,60" Height="25"/>
+
+
+        <Grid x:Name="grid1" DataContext="{StaticResource customerdeclarationViewSource}" HorizontalAlignment="Left" Margin="90,56,0,0" VerticalAlignment="Top" Width="134" Grid.Row="1" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="51"/>
+                <ColumnDefinition Width="Auto" MinWidth="27"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="date:" Grid.Column="0" HorizontalAlignment="Left" Margin="-5,80,0,-67" Grid.Row="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Height="26" Width="47">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-1.577"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <DatePicker x:Name="dateDatePicker" Margin="0,13,-36,0" Grid.Row="0" SelectedDate="{Binding date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Height="27" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="124"/>
+        </Grid>
+        <ListView Grid.Column="1" HorizontalAlignment="Left" Height="342" Margin="0,60,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="319" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+            <ListView.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.13"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListView.RenderTransform>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock x:Name="InfoStat" HorizontalAlignment="Left" Margin="65,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="#FFFFFEFE" Foreground="#FF0A0000" Height="26" Width="175" TextAlignment="Center" Grid.Row="1" />
+        <ComboBox x:Name="ListDeclar"   HorizontalAlignment="Left" Margin="65,139,0,0" VerticalAlignment="Top" Width="175" Height="25"  SelectionChanged="ListDeclar_SelectionChanged" />
+        <StackPanel Margin="0,50,0,1" Grid.RowSpan="2" Grid.Column="1">
+            <Label x:Name="Us" Background="{x:Null}" Height="25" Content="WELCOME," Margin="0,0,199,0" Foreground="WhiteSmoke"/>
+            <TextBox x:Name="UsE" Background="{x:Null}" Height="25"  Foreground="WhiteSmoke" Margin="91,0,0,0" TextChanged="UsE_TextChanged"/>
+            <ListBox x:Name="List" Height="225" SelectionChanged="List_SelectionChanged"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,209 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KURSOVOI.View"
+        xmlns:ms="http://namespaces.mindscape.co.nz/wpf"
+     
+         x:Class="KURSOVOI.View.AdminPage"
+      
+        mc:Ignorable="d"
+        Icon="../Resourse/declaration.ico"
+        Title="AdminPage" Height="282" Width="744" Background="Black" Loaded="Window_Loaded" AllowDrop="False" Activated="Window_Activated" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0,0,2,-1">
+        <TabControl  x:Name="Tab" Margin="0,0,144,0" BorderThickness="0" Background="Black" >
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="IndianRed"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem  FontSize="12" Header="ProductInfo" Height="20" VerticalAlignment="Top">
+                <DataGrid  x:Name="TableSql"  ItemsSource="{Binding Path=Tble, Mode=OneWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" BorderThickness="1"  Foreground="Black" FontSize="10" Margin="0,0,12,21" RenderTransformOrigin="0.505,0.673" ColumnWidth="Auto"  MouseUp="TableSql_MouseUp" SelectionChanged="TableSql_SelectionChanged" >
+                    <!--<DataGrid.Columns>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border  BorderBrush="Black" BorderThickness="1" CornerRadius="3" Margin="0,3" Grid.ColumnSpan="4" Background="White" >
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="2" ShadowDepth="5" Color="Red" />
+                                        </Border.Effect>
+                                        <Grid Background="White" Margin="0,1"  >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock  MouseDown="TextBlock_MouseDown"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>-->
+                </DataGrid>
+            </TabItem>
+            <TabItem x:Name="Custome" Header="Customer" RenderTransformOrigin="0.5,0.5"  FontSize="12">
+                <DataGrid Name="customer" HorizontalAlignment="Left" Height="203" VerticalAlignment="Top" Width="575" RenderTransformOrigin="0.5,0.5" Margin="1,0,0,-3" CurrentItem="Black" MouseUp="customer_MouseUp" SelectionChanged="customer_SelectionChanged">
+
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="DeclarationInfo" FontSize="12" Height="20" VerticalAlignment="Top">
+                <DataGrid x:Name="declare" ItemsSource="{Binding Requests}" Margin="0,0,11,23">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsActive}" Value="true">
+                                    <Setter Property="Background" Value="IndianRed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+
+            </TabItem>
+            <TabItem Header="Search" FontSize="12" Height="20" VerticalAlignment="Top" >
+                <ListBox Background="Black" Margin="0,0,4,0"  BorderBrush="IndianRed" BorderThickness="2">
+                    <Label Content="DATA" Height="26" Width="557" Foreground="WhiteSmoke" Background="IndianRed" />
+                    <DatePicker x:Name="Date" Height="26" Width="123" DatePicker.SelectedDateChanged="Date_SelectedDateChanged" />
+                    <Separator BorderBrush="IndianRed" BorderThickness="2"/>
+                    <Label Content="COUNT OF DECLARATIONS" Height="26" Width="557" Foreground="WhiteSmoke" Background="IndianRed"/>
+                    <ListBox x:Name="Count" Height="66" Width="558" Foreground="Black"/>
+                    <Separator BorderBrush="IndianRed" BorderThickness="2"/>
+                </ListBox>
+            </TabItem>
+            <TabItem x:Name="DeclarationInfo" Header="DeclaratorInfo" HorizontalAlignment="Left" Width="133" Height="20" VerticalAlignment="Top" >
+                <ListView  Background="Black" Foreground="WhiteSmoke" BorderThickness="2" BorderBrush="IndianRed">
+                    <Label Content="DECLARATOR NAME"  Width="562" Foreground="WhiteSmoke" Background="IndianRed" Height="25"/>
+                    <TextBox Name="declaratorName" Style="{StaticResource placeHolder}" Tag="DECLARATOR NAME :FOR EXAMPLE 'MARK SINPSON'"   Height="26" Width="562" Background="{x:Null}" Foreground="WhiteSmoke" BorderThickness="2"/>
+                    <Separator BorderBrush="IndianRed" BorderThickness="3"/>
+                    <Label Content="JOB TITLE" Width="562" Foreground="WhiteSmoke" Background="IndianRed"/>
+                    <TextBox Name="jobTitle" Style="{StaticResource placeHolder}" Tag="JOB TITLE OF DECLARATOR : FOR EXAMPLE 'CUSTOM DIRECTOR'" Height="26" Width="562"  Background="{x:Null}" Foreground="WhiteSmoke" BorderThickness="2"/>
+                    <Separator BorderBrush="IndianRed" BorderThickness="3" />
+                    <Button Content="PUSH" BorderBrush="Black"  BorderThickness="6"  Foreground="WhiteSmoke" Click="Push_Click"  VerticalAlignment="Bottom" RenderTransformOrigin="0.574,1.039" Width="557" Height="21" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Black"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="IndianRed"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </ListView>
+            </TabItem>
+        </TabControl>
+        <Button Content="STATUS" Margin="635,85,36,137" Click="Status_Click" Foreground="WhiteSmoke" RenderTransformOrigin="0.397,0.5" >
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="IndianRed"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <TextBox x:Name="Test2" Style="{StaticResource placeHolder}" Tag="ID_DECLARATION" HorizontalAlignment="Left" Height="30" Margin="619,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="WhiteSmoke" BorderBrush="IndianRed"/>
+        <TextBox x:Name="id_cust" Style="{StaticResource placeHolder}" Tag="ID_CUSTOMER" HorizontalAlignment="Left" Height="28" Margin="619,130,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="WhiteSmoke" BorderBrush="IndianRed" />
+        <Button Content="ADD DECLARATOR" Margin="619,158,16,62" Click="Declarator_Click" RenderTransformOrigin="0.5,0.5" Foreground="WhiteSmoke" >
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="IndianRed"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Window>

@@ -1,0 +1,74 @@
+﻿<Window x:Class="KURSOVOI.View.Autorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KURSOVOI"
+        mc:Ignorable="d"
+        Icon="../Resourse/auto.ico"
+        
+         Title="Auto" Height="262" Width="314" Background="Black" Foreground="White" WindowStyle="ThreeDBorderWindow" FontFamily="Century Gothic" FontSize="14" Cursor="Hand" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+       
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="Please,get an autorization!" Foreground="Azure" TextAlignment="Center" VerticalAlignment="Center"  FontFamily="Century Gothic" FontSize="16" Margin="0,10,0,28"></TextBlock>
+        <Label Grid.Column="0" Grid.Row="1" Foreground="White" Content="&#xA;            Login" Grid.ColumnSpan="2"/>
+        <TextBox  Name="login" Grid.Column="1" Grid.Row="1" Height="25" VerticalAlignment="Top"  Margin="10,15,23,0" TextChanged="TextBox_TextChanged">
+           
+        </TextBox>
+        <Label Grid.Column="0" Grid.Row="2" Foreground="White" Content="&#xA;          Password" Grid.ColumnSpan="2"/>
+        <PasswordBox Grid.Column="1" Grid.Row="2" Height="25" VerticalAlignment="Top"  Margin="10,15,23,0" Name="password">
+        </PasswordBox>
+        <Button Grid.Column="0" Grid.Row="3" Content="Submit" BorderBrush="Black"  BorderThickness="6"  Foreground="Black" Margin="25,10,10,10" Click="Submit_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="DarkGray" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="IndianRed"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="3" Content="Registration" BorderBrush="Black"  BorderThickness="6"   Foreground="Black" Margin="10,10,23,10"  Click="Registration_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="IndianRed"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Window>

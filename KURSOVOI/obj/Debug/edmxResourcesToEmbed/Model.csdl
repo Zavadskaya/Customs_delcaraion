@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="customModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="autorization">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id_customer" />
+    </Key>
+    <Property Name="id_customer" Type="Int32" Nullable="false" />
+    <Property Name="customerLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="customerFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="birthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="postalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="declaration" Relationship="Self.FK_declaration_customer" FromRole="customer" ToRole="declaration" />
+  </EntityType>
+  <EntityType Name="declaration">
+    <Key>
+      <PropertyRef Name="id_declaration" />
+    </Key>
+    <Property Name="id_declaration" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="id_customer" Type="Int32" Nullable="false" />
+    <Property Name="id_product" Type="Int32" Nullable="false" />
+    <Property Name="id_declarator" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="customer" Relationship="Self.FK_declaration_customer" FromRole="declaration" ToRole="customer" />
+    <NavigationProperty Name="declarator" Relationship="Self.FK_declaration_declarator" FromRole="declaration" ToRole="declarator" />
+    <NavigationProperty Name="product" Relationship="Self.FK_declaration_product" FromRole="declaration" ToRole="product" />
+  </EntityType>
+  <EntityType Name="declarator">
+    <Key>
+      <PropertyRef Name="id_declarator" />
+    </Key>
+    <Property Name="id_declarator" Type="Int32" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="jobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="declaration" Relationship="Self.FK_declaration_declarator" FromRole="declarator" ToRole="declaration" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id_product" />
+    </Key>
+    <Property Name="id_product" Type="Int32" Nullable="false" />
+    <Property Name="productCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="productScale" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="productInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="productCampony" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="unitPrice" Type="Single" Nullable="false" />
+    <NavigationProperty Name="declaration" Relationship="Self.FK_declaration_product" FromRole="product" ToRole="declaration" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_declaration_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="1" />
+    <End Role="declaration" Type="Self.declaration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="id_customer" />
+      </Principal>
+      <Dependent Role="declaration">
+        <PropertyRef Name="id_customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_declaration_declarator">
+    <End Role="declarator" Type="Self.declarator" Multiplicity="1" />
+    <End Role="declaration" Type="Self.declaration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="declarator">
+        <PropertyRef Name="id_declarator" />
+      </Principal>
+      <Dependent Role="declaration">
+        <PropertyRef Name="id_declarator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_declaration_product">
+    <End Role="product" Type="Self.product" Multiplicity="1" />
+    <End Role="declaration" Type="Self.declaration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id_product" />
+      </Principal>
+      <Dependent Role="declaration">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="customEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="autorization" EntityType="Self.autorization" />
+    <EntitySet Name="customer" EntityType="Self.customer" />
+    <EntitySet Name="declaration" EntityType="Self.declaration" />
+    <EntitySet Name="declarator" EntityType="Self.declarator" />
+    <EntitySet Name="product" EntityType="Self.product" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_declaration_customer" Association="Self.FK_declaration_customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="declaration" EntitySet="declaration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_declaration_declarator" Association="Self.FK_declaration_declarator">
+      <End Role="declarator" EntitySet="declarator" />
+      <End Role="declaration" EntitySet="declaration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_declaration_product" Association="Self.FK_declaration_product">
+      <End Role="product" EntitySet="product" />
+      <End Role="declaration" EntitySet="declaration" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
